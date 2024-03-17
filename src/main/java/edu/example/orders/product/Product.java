@@ -5,9 +5,8 @@ public record Product(String name,
                       String model_number,
                       String category,
                       String description,
-                      String colors,
-                      double price,
-                      double weight,
+                      Double price,
+                      Double weight,
                       String manufacturer,
-                      int year_manufacturer) {
+                      Integer year_manufacturer) {
 }
