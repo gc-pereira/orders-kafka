@@ -21,7 +21,7 @@ public class Address {
     @Column(name = "street_name", length = 300, nullable = false)
     private String streetName;
 
-    @Column(name = "complement", length = 100, nullable = true)
+    @Column(name = "complement", length = 100)
     private String complement;
 
     @Column(name = "post_code", nullable = false)
