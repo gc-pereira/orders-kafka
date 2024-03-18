@@ -1,5 +1,6 @@
-package edu.example.orders.models;
+package edu.example.orders.models.entity;
 
+import edu.example.orders.transfer.ShopData;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class Shop {
     @NotEmpty
     @NotNull
     @Column(name = "id", nullable = false)
-    public String id;
+    public Long id;
 
     @NotNull
     @NotEmpty
@@ -32,8 +33,7 @@ public class Shop {
     @NotEmpty
     public String phone;
 
-    @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "address_id")
+    @Embedded
     public Address address;
 
     @NotEmpty
@@ -43,4 +43,19 @@ public class Shop {
     @NotEmpty
     @Column(name = "email")
     public String email;
+
+    public Shop(ShopData shopData) {
+        this.name = shopData.name();
+        this.ein = shopData.ein();
+        this.phone = shopData.phone();
+        this.address = new Address(
+                shopData.address().street_name(),
+                shopData.address().complement(),
+                shopData.address().post_code(),
+                shopData.address().uf(),
+                shopData.address().city()
+                );
+        this.segment = shopData.segment();
+        this.email = shopData.email();
+    }
 }

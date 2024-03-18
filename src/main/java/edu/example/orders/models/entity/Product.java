@@ -1,6 +1,7 @@
-package edu.example.orders.models;
+package edu.example.orders.models.entity;
 
 
+import edu.example.orders.transfer.ProductData;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     public Long id;
 
     @NotEmpty
@@ -41,18 +42,27 @@ public class Product {
     public String description;
 
     @NotNull
-    @NotEmpty
     @Column(name = "price", nullable = false)
     public Double price;
 
     @NotNull
-    @NotEmpty
     @Column(name = "weight", nullable = false)
     public Double weight;
 
     @NotEmpty
     public String manufacturer;
 
-    @NotEmpty
     public Integer year_manufacturer;
+
+    public Product(ProductData productData){
+        this.name = productData.name();
+        this.brand = productData.brand();
+        this.model_number = productData.model_number();
+        this.category = productData.category();
+        this.description = productData.description();
+        this.price = productData.price();
+        this.weight = productData.weight();
+        this.manufacturer = productData.manufacturer();
+        this.year_manufacturer = productData.year_manufacturer();
+    }
 }

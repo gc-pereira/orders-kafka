@@ -1,6 +1,7 @@
-package edu.example.orders.models;
+package edu.example.orders.models.entity;
 
 
+import edu.example.orders.transfer.PersonData;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -34,15 +35,13 @@ public class Person {
     @Column(name = "birth_date", nullable = false)
     public Timestamp birth_date;
 
-    @OneToOne
-    @JoinColumn(referencedColumnName = "id", name = "document_id")
+    @Embedded
     public Document document;
 
     @Column(name = "phone")
     public String phone;
 
-    @OneToOne
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @Embedded
     public Address address;
 
     @NotNull
@@ -56,4 +55,20 @@ public class Person {
     @Column(name = "email")
     public String email;
 
+    public Person(PersonData personData) {
+        this.name = personData.name();
+        this.birth_date = personData.birth_date();
+        this.document = new Document(personData.document());
+        this.phone = personData.phone();
+        this.address = new Address(
+                personData.address().street_name(),
+                personData.address().complement(),
+                personData.address().post_code(),
+                personData.address().uf(),
+                personData.address().city()
+        );
+        this.age = personData.age();
+        this.occupation = personData.occupation();
+        this.email = personData.email();
+    }
 }
