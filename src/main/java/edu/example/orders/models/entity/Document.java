@@ -15,4 +15,6 @@ public class Document {
         this.type = documentData.type();
         this.number = documentData.number();
     }
+
+    public Document() {}
 }

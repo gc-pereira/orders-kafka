@@ -8,18 +8,21 @@ import jakarta.persistence.Embeddable;
 @Getter
 public class Address {
 
-    private String streetName;
-    private String complement;
-    private String postCode;
-    private String uf;
-    private String city;
+    public String street_name;
+    public String complement;
+    public String postCode;
+    public String uf;
+    public String city;
 
-    public Address(String streetName, String complement, String postCode, String uf, String city) {
-        this.streetName = streetName;
-        this.complement = complement;
-        this.postCode = postCode;
-        this.uf = uf;
-        this.city = city;
+    public Address(AddressData addressData) {
+        this.street_name = addressData.street_name();
+        this.complement = addressData.complement();
+        this.postCode = addressData.post_code();
+        this.uf = addressData.uf();
+        this.city = addressData.city();
+    }
+
+    public Address() {
     }
 
 }

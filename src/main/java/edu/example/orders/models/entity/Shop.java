@@ -48,14 +48,10 @@ public class Shop {
         this.name = shopData.name();
         this.ein = shopData.ein();
         this.phone = shopData.phone();
-        this.address = new Address(
-                shopData.address().street_name(),
-                shopData.address().complement(),
-                shopData.address().post_code(),
-                shopData.address().uf(),
-                shopData.address().city()
-                );
+        this.address = new Address(shopData.address());
         this.segment = shopData.segment();
         this.email = shopData.email();
     }
+
+    protected Shop() {}
 }

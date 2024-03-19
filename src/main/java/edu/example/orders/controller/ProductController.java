@@ -5,10 +5,9 @@ import edu.example.orders.models.reposity.ProductRepository;
 import edu.example.orders.transfer.ProductData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -26,5 +25,10 @@ public class ProductController {
                         productData
                 )
         );
+    }
+
+    @GetMapping
+    public Optional<Product> getProduct(@RequestParam(value = "id") Long id) {
+        return productRepository.findById(id);
     }
 }

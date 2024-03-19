@@ -19,8 +19,6 @@ public class Person {
     public static final String TABLE_NAME = "person";
 
     @Id
-    @NotNull
-    @NotEmpty
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long id;
@@ -30,7 +28,6 @@ public class Person {
     @Column(name = "name", nullable = false)
     public String name;
 
-    @NotEmpty
     @NotNull
     @Column(name = "birth_date", nullable = false)
     public Timestamp birth_date;
@@ -45,7 +42,6 @@ public class Person {
     public Address address;
 
     @NotNull
-    @NotEmpty
     @Column(name = "age")
     public Integer age;
 
@@ -60,15 +56,11 @@ public class Person {
         this.birth_date = personData.birth_date();
         this.document = new Document(personData.document());
         this.phone = personData.phone();
-        this.address = new Address(
-                personData.address().street_name(),
-                personData.address().complement(),
-                personData.address().post_code(),
-                personData.address().uf(),
-                personData.address().city()
-        );
+        this.address = new Address(personData.address());
         this.age = personData.age();
         this.occupation = personData.occupation();
         this.email = personData.email();
     }
+
+    public Person() {}
 }

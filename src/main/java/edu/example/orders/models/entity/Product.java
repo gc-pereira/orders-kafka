@@ -65,4 +65,6 @@ public class Product {
         this.manufacturer = productData.manufacturer();
         this.year_manufacturer = productData.year_manufacturer();
     }
+
+    protected Product() {}
 }

@@ -6,10 +6,10 @@ import edu.example.orders.models.reposity.ShopRepository;
 import edu.example.orders.transfer.ShopData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/shop")
@@ -26,5 +26,15 @@ public class ShopController {
                         shopData
                 )
         );
+    }
+
+    @GetMapping
+    public @ResponseBody Optional<Shop> getShop(@RequestParam(name = "id") Long id) {
+        return shopRepository.findById(id);
+    }
+
+    @GetMapping(value = "/id")
+    public @ResponseBody List<Shop> getAllShops(){
+        return shopRepository.findAll();
     }
 }
