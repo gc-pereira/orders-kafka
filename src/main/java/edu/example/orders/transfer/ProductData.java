@@ -1,12 +1,15 @@
 package edu.example.orders.transfer;
 
-public record ProductData(String name,
-                          String brand,
-                          String model_number,
-                          String category,
-                          String description,
-                          Double price,
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record ProductData(@NotNull @NotBlank String name,
+                          @NotNull @NotBlank String brand,
+                          @NotBlank String model_number,
+                          @NotBlank String category,
+                          @NotBlank String description,
+                          @NotNull Double price,
                           Double weight,
-                          String manufacturer,
+                          @NotBlank String manufacturer,
                           Integer year_manufacturer) {
 }

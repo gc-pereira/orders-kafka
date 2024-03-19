@@ -1,5 +1,11 @@
 package edu.example.orders.transfer;
 
-public record DocumentData(String type,
-                           String number) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record DocumentData(
+        @NotBlank
+        String type,
+        @NotBlank
+        String number) {
 }

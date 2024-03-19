@@ -3,6 +3,7 @@ package edu.example.orders.controller;
 import edu.example.orders.models.entity.Product;
 import edu.example.orders.models.reposity.ProductRepository;
 import edu.example.orders.transfer.ProductData;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ProductController {
 
     @PostMapping
     @Transactional
-    public void createProduct(@RequestBody ProductData productData){
+    public void createProduct(@RequestBody @Valid ProductData productData){
         System.out.println(productData.toString());
         productRepository.save(
                 new Product(

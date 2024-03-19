@@ -1,9 +1,12 @@
 package edu.example.orders.transfer;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 public record ShopData(String name,
                        String ein,
                        String phone,
-                       AddressData address,
+                       @Valid @NotNull AddressData address,
                        String segment,
                        String email) {
 

@@ -4,6 +4,7 @@ package edu.example.orders.controller;
 import edu.example.orders.models.entity.Shop;
 import edu.example.orders.models.reposity.ShopRepository;
 import edu.example.orders.transfer.ShopData;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ShopController {
 
     @PostMapping
     @Transactional
-    public void createShop(@RequestBody ShopData shopData) {
+    public void createShop(@RequestBody @Valid ShopData shopData) {
         shopRepository.save(
                 new Shop(
                         shopData

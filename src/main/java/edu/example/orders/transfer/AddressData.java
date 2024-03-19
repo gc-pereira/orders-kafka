@@ -1,9 +1,24 @@
 package edu.example.orders.transfer;
 
-public record AddressData(String street_name,
-                          String number,
-                          String complement,
-                          String post_code,
-                          String uf,
-                          String city) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record AddressData(
+        @NotBlank
+        @NotNull
+        String street_name,
+        @NotBlank
+        @NotNull
+        String number,
+        @NotBlank
+        String complement,
+        @NotBlank
+        @NotNull
+        String post_code,
+        @NotBlank
+        @NotNull
+        String uf,
+        @NotBlank
+        @NotNull
+        String city) {
 }
