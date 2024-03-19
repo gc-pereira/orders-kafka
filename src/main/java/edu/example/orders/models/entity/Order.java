@@ -1,5 +1,6 @@
 package edu.example.orders.models.entity;
 
+import edu.example.orders.transfer.OrderData;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,14 +32,23 @@ public class Order {
 
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
-    public Person person;
+    public Long person_id;
 
     @ManyToOne
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    public Shop shop;
+    public Long shop_id;
 
     @OneToMany
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     public List<Product> product;
 
+    public Order(OrderData orderData){
+        this.date = orderData.date();
+        this.person_id = orderData.personId();
+
+    }
+
+    protected Order() {
+
+    }
 }

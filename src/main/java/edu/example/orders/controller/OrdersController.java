@@ -1,5 +1,6 @@
 package edu.example.orders.controller;
 
+import edu.example.orders.models.entity.Order;
 import edu.example.orders.models.reposity.OrderRepository;
 import edu.example.orders.transfer.OrderData;
 import jakarta.validation.Valid;
@@ -15,6 +16,8 @@ public class OrdersController {
 
     @PostMapping
     public void createOrder(@RequestBody @Valid OrderData orderData) {
-        System.out.println(orderData);
+        orderRepository.save(
+                new Order(orderData)
+        );
     }
 }
