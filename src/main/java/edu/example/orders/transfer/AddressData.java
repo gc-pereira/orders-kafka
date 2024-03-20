@@ -10,7 +10,6 @@ public record AddressData(
         @NotBlank
         @NotNull
         String number,
-        @NotBlank
         String complement,
         @NotBlank
         @NotNull

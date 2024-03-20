@@ -15,9 +15,8 @@ public class Shop {
     public static final String TABLE_NAME = "shop";
 
     @Id
-    @NotEmpty
-    @NotNull
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     public Long id;
 
     @NotNull

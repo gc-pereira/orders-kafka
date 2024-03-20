@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -19,33 +20,31 @@ public class Order {
     public static final String TABLE_NAME = "orders";
 
     @Id
-    @NotNull
-    @NotEmpty
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     public Long id;
 
     @NotNull
-    @NotEmpty
     @Column(name = "date", nullable = false)
     public Timestamp date;
 
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
-    public Long person_id;
+    public Person person;
 
     @ManyToOne
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    public Long shop_id;
+    public Shop shop;
 
     @OneToMany
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     public List<Product> product;
 
-    public Order(OrderData orderData){
-        this.date = orderData.date();
-        this.person_id = orderData.personId();
-
+    public Order(Timestamp date, Person person, Shop shop, List<Product> product){
+        this.date = date;
+        this.person = person;
+        this.shop = shop;
+        this.product = product;
     }
 
     protected Order() {

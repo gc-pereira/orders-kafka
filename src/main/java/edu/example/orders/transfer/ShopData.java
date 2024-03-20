@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 public record ShopData(String name,
                        String ein,
                        String phone,
-                       @Valid @NotNull AddressData address,
+                       @Valid AddressData address,
                        String segment,
                        String email) {
 

@@ -1,6 +1,7 @@
 package edu.example.orders.controller;
 
 
+import edu.example.orders.message.ProducerMessage;
 import edu.example.orders.models.entity.Shop;
 import edu.example.orders.models.reposity.ShopRepository;
 import edu.example.orders.transfer.ShopData;
@@ -19,6 +20,8 @@ public class ShopController {
     @Autowired
     public ShopRepository shopRepository;
 
+    ProducerMessage producerMessage = new ProducerMessage();
+
     @PostMapping
     @Transactional
     public void createShop(@RequestBody @Valid ShopData shopData) {
@@ -27,6 +30,9 @@ public class ShopController {
                         shopData
                 )
         );
+        producerMessage.setTopicName("NEW_ORDERS");
+        producerMessage.setHeader("CREATE_ORDERS");
+        producerMessage.sendMessage(shopData.toString());
     }
 
     @GetMapping
