@@ -1,5 +1,6 @@
 package edu.example.orders.controller;
 
+import edu.example.orders.message.ProducerMessage;
 import edu.example.orders.models.entity.Order;
 import edu.example.orders.models.entity.Person;
 import edu.example.orders.models.entity.Product;
@@ -29,16 +30,35 @@ public class OrdersController {
     @Autowired
     ProductRepository productRepository;
 
+    ProducerMessage producerMessage;
+
     @PostMapping
     public void createOrder(@RequestBody @Valid OrderData orderData) {
         Optional<Person> person = personRepository.findById(orderData.personId());
         Optional<Shop> shop = shopRepository.findById(orderData.shopId());
         List<Product> productList = productRepository.findAllById(orderData.productId());
+        Order order = new Order(orderData.date(),
+                person.get(),
+                shop.get(),
+                productList);
         orderRepository.save(
-                new Order(orderData.date(),
-                        person.get(),
-                        shop.get(),
-                        productList)
+                order
         );
+        producerMessage.setTopicName("ORDERS");
+        producerMessage.setHeader("CREATE_ORDER");
+        producerMessage.sendMessage(order.toString());
     }
+
+    @DeleteMapping(value = "/id")
+    public void deleteOrder(@RequestParam(name = "id") Long id){
+        orderRepository.deleteById(id);
+        producerMessage.setTopicName("ORDERS");
+        producerMessage.setHeader("DELETE_ORDER");
+        producerMessage.sendMessage(orderRepository.findById(id).toString());
+    }
+
+    public @ResponseBody Optional<Order> getOrderById(@RequestParam(name = "id") Long id){
+        return orderRepository.findById(id);
+    }
+
 }

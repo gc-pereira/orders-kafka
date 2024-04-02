@@ -30,8 +30,8 @@ public class ShopController {
                         shopData
                 )
         );
-        producerMessage.setTopicName("NEW_ORDERS");
-        producerMessage.setHeader("CREATE_ORDERS");
+        producerMessage.setTopicName("SHOPS");
+        producerMessage.setHeader("CREATE_SHOPS");
         producerMessage.sendMessage(shopData.toString());
     }
 
@@ -44,4 +44,13 @@ public class ShopController {
     public @ResponseBody List<Shop> getAllShops(){
         return shopRepository.findAll();
     }
+
+    @DeleteMapping(value = "/id")
+    public void deleteShop(@RequestParam(name = "id") Long id){
+        shopRepository.deleteById(id);
+        producerMessage.setTopicName("SHOPS");
+        producerMessage.setHeader("DELETE_SHOPS");
+        producerMessage.sendMessage(shopRepository.findById(id).toString());
+    }
+
 }

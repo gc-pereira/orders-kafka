@@ -1,5 +1,6 @@
 package edu.example.orders.controller;
 
+import edu.example.orders.message.ProducerMessage;
 import edu.example.orders.models.entity.Product;
 import edu.example.orders.models.reposity.ProductRepository;
 import edu.example.orders.transfer.ProductData;
@@ -18,6 +19,8 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    ProducerMessage producerMessage;
+
     @PostMapping
     @Transactional
     public void createProduct(@RequestBody @Valid ProductData productData){
@@ -27,6 +30,9 @@ public class ProductController {
                         productData
                 )
         );
+        producerMessage.setTopicName("PRODUCTS");
+        producerMessage.setHeader("CREATE_PRODUCT");
+        producerMessage.sendMessage(productData.toString());
     }
 
     @GetMapping
@@ -37,5 +43,13 @@ public class ProductController {
     @GetMapping(value = "/id")
     public @ResponseBody List<Product> getAllProducts(){
         return productRepository.findAll().stream().toList();
+    }
+
+    @DeleteMapping(value = "/id")
+    public void deleteProduct(@RequestParam(name = "id") Long id){
+        productRepository.deleteById(id);
+        producerMessage.setTopicName("PRODUCTS");
+        producerMessage.setHeader("DELETE_PRODUCT");
+        producerMessage.sendMessage(productRepository.findById(id).toString());
     }
 }
